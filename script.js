@@ -13,19 +13,25 @@ console.log(document.querySelector('.guess').value);
 document.querySelector('.guess').value = 23;
 */
 
-const secretNumber = Math.trunc(Math.random() * 20) + 1;
+let secretNumber = Math.trunc(Math.random() * 20) + 1;
 let score = 20; // State variable.
-document.querySelector('.number').textContent = secretNumber;
 
 document.querySelector('.check').addEventListener('click', function () {
   const guess = Number(document.querySelector('.guess').value); // Usually data retieved from user interface are generally string.
   console.log(guess, typeof guess);
 
   if (!guess) {
+    // When there is no input.
     document.querySelector('.message').textContent = '⛔ No Number!';
   } else if (guess === secretNumber) {
+    // When player wins.
     document.querySelector('.message').textContent = '🎉 Correct Number!';
+    document.querySelector('.number').textContent = secretNumber;
+
+    document.querySelector('body').style.backgroundColor = '#60b347';
+    document.querySelector('.number').style.width = '30rem';
   } else if (guess > secretNumber) {
+    // When guess is greater than number.
     if (score > 1) {
       document.querySelector('.message').textContent = '📈 Too High!';
       score--;
@@ -35,6 +41,7 @@ document.querySelector('.check').addEventListener('click', function () {
       document.querySelector('.score').textContent = 0;
     }
   } else if (guess < secretNumber) {
+    // When guess is less than number.
     if (score > 1) {
       document.querySelector('.message').textContent = '📉 Too Low!';
       score--;
@@ -44,4 +51,15 @@ document.querySelector('.check').addEventListener('click', function () {
       document.querySelector('.score').textContent = 0;
     }
   }
+});
+
+document.querySelector('.again').addEventListener('click', function () {
+  score = 20;
+  secretNumber = Math.trunc(Math.random() * 20) + 1;
+  document.querySelector('.guess').value = '';
+  document.querySelector('.message').textContent = 'Start guessing...';
+  document.querySelector('.score').textContent = score;
+  document.querySelector('.number').textContent = '?';
+  document.querySelector('body').style.backgroundColor = '#222';
+  document.querySelector('.number').style.width = '15rem';
 });
