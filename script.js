@@ -15,6 +15,7 @@ document.querySelector('.guess').value = 23;
 
 let secretNumber = Math.trunc(Math.random() * 20) + 1;
 let score = 20; // State variable.
+let highscore = 0;
 
 document.querySelector('.check').addEventListener('click', function () {
   const guess = Number(document.querySelector('.guess').value); // Usually data retieved from user interface are generally string.
@@ -30,6 +31,11 @@ document.querySelector('.check').addEventListener('click', function () {
 
     document.querySelector('body').style.backgroundColor = '#60b347';
     document.querySelector('.number').style.width = '30rem';
+
+    if (score > highscore) {
+      highscore = score;
+      document.querySelector('.highscore').textContent = highscore;
+    }
   } else if (guess > secretNumber) {
     // When guess is greater than number.
     if (score > 1) {
